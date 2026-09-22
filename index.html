@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>أنمي ستريم | AnimeStream Mobile</title>
+  <meta name="description" content="تطبيق ويب خفيف وعصري لمشاهدة وتتبع الأنمي مع الوضع الداكن واستكمال المشاهدة والمفضلة" />
+  <meta property="og:title" content="أنمي ستريم | AnimeStream Mobile" />
+  <meta property="og:description" content="تطبيق ويب خفيف وعصري لمشاهدة وتتبع الأنمي مع الوضع الداكن واستكمال المشاهدة والمفضلة" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#09090b" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- خطوط عربية حديثة Google Fonts (Cairo & Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS عبر CDN لتشغيل الكود مباشرة بدون تثبيت npm -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Cairo', 'Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            zinc: {
+              950: '#09090b',
+              900: '#121215',
+              850: '#18181c',
+              800: '#222228',
+            },
+            amber: {
+              400: '#fbbf24',
+              500: '#f59e0b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #09090b;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #27272a;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3f3f46;
+    }
+
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.25s ease-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body class="bg-zinc-950 text-zinc-100 min-h-screen pb-24 antialiased selection:bg-amber-500 selection:text-zinc-950">
+
+  <!-- 1. شريط التطبيق العلوي -->
+  <header class="sticky top-0 z-40 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-900/80 px-4 py-3">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2.5 cursor-pointer" onclick="window.switchTabGlobal('home')">
+        <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-400 text-zinc-950 flex items-center justify-center font-black shadow-lg shadow-amber-500/20 text-base">
+          ▶
+        </div>
+        <div>
+          <span class="text-sm font-black tracking-tight text-white block leading-none">أنمي ستريم</span>
+          <span class="text-[10px] text-amber-400 font-semibold tracking-wider">ANIME STREAM</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button 
+          id="header-search-btn"
+          class="p-2 rounded-xl bg-zinc-900 text-zinc-300 hover:text-white border border-zinc-800 active:scale-95 transition-transform"
+          title="بحث فوري"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </button>
+
+        <div class="px-2 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-[11px] font-bold text-emerald-400 flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>متصل</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. محتوى التبويبات -->
+  <main class="max-w-md mx-auto px-4 pt-4 space-y-6">
+
+    <!-- تبويب 1: الرئيسية -->
+    <section id="tab-home" class="space-y-6 fade-in">
+      
+      <!-- شريط البحث السريع -->
+      <div class="relative">
+        <div class="absolute inset-y-0 right-3.5 flex items-center pointer-events-none text-zinc-400">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+        <input 
+          id="main-search-input"
+          type="search" 
+          placeholder="ابحث عن أنمي (مثال: Naruto, Attack on Titan...)" 
+          class="w-full bg-zinc-900 border border-zinc-800 text-zinc-100 text-xs sm:text-sm rounded-2xl pr-10 pl-10 py-3 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all placeholder:text-zinc-500"
+        />
+        <button 
+          id="clear-search-btn" 
+          class="absolute inset-y-0 left-3 flex items-center text-zinc-500 hover:text-zinc-300 hidden"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- شريط التصنيفات -->
+      <div id="genres-filter-container" class="flex gap-2 overflow-x-auto pb-1 hide-scrollbar"></div>
+
+      <!-- البنر الترويجي -->
+      <div id="hero-container" class="w-full"></div>
+
+      <!-- قسم: استكمال المشاهدة -->
+      <section id="continue-watching-section" class="space-y-3 hidden">
+        <div class="flex items-center justify-between">
+          <button class="text-xs text-amber-400 font-bold hover:underline" onclick="window.switchTabGlobal('continue')">
+            عرض الكل
+          </button>
+          <div class="flex items-center gap-1.5">
+            <span class="w-1.5 h-4 bg-amber-500 rounded-full"></span>
+            <h2 class="text-sm font-black text-zinc-100 tracking-tight">استكمال المشاهدة</h2>
+          </div>
+        </div>
+
+        <div id="continue-watching-list" class="flex gap-3 overflow-x-auto pb-2 hide-scrollbar"></div>
+      </section>
+
+      <!-- قسم: الأنميات الأكثر رواجاً -->
+      <section class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] text-zinc-500">محدّث تلقائياً</span>
+          <div class="flex items-center gap-1.5">
+            <span class="w-1.5 h-4 bg-amber-500 rounded-full"></span>
+            <h2 class="text-sm font-black text-zinc-100 tracking-tight">الأنميات الأكثر رواجاً</h2>
+          </div>
+        </div>
+
+        <div id="trending-container" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+      </section>
+
+    </section>
+
+    <!-- تبويب 2: البحث -->
+    <section id="tab-search" class="space-y-4 hidden fade-in">
+      <div class="flex items-center justify-between pb-2 border-b border-zinc-900">
+        <p id="search-count" class="text-xs text-zinc-400">ابحث عن أي أنمي بالإنجليزية أو اليابانية</p>
+        <h2 class="text-base font-bold text-white">نتائج البحث</h2>
+      </div>
+
+      <div id="search-results-container" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+    </section>
+
+    <!-- تبويب 3: استكمال المشاهدة -->
+    <section id="tab-continue" class="space-y-4 hidden fade-in">
+      <div class="flex items-center justify-between pb-2 border-b border-zinc-900">
+        <span class="text-xs text-zinc-500">محفوظة على ذاكرة هاتفك</span>
+        <h2 class="text-base font-bold text-white">سجل استكمال المشاهدة</h2>
+      </div>
+
+      <div id="tab-continue-list" class="space-y-3"></div>
+    </section>
+
+    <!-- تبويب 4: مفضلتي -->
+    <section id="tab-favorites" class="space-y-4 hidden fade-in">
+      <div class="flex items-center justify-between pb-2 border-b border-zinc-900">
+        <span class="text-xs text-zinc-500">أنمياتك المفضلة للرجوع إليها</span>
+        <h2 class="text-base font-bold text-white">قائمة مفضلتي</h2>
+      </div>
+
+      <div id="favorites-container" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+    </section>
+
+  </main>
+
+  <!-- 3. نافذة تفاصيل الأنمي -->
+  <div id="anime-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div id="anime-modal-content" class="w-full max-w-md bg-zinc-950 rounded-t-3xl sm:rounded-3xl border border-zinc-800 max-h-[90vh] overflow-y-auto shadow-2xl relative"></div>
+  </div>
+
+  <!-- 4. نافذة مشغل الفيديو والسيرفرات -->
+  <div id="player-modal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex flex-col justify-center items-center p-0 sm:p-4">
+    <div id="player-modal-content" class="w-full max-w-xl bg-zinc-950 rounded-none sm:rounded-3xl border border-zinc-800/80 shadow-2xl overflow-hidden"></div>
+  </div>
+
+  <!-- 5. الشريط السفلي للتنقل -->
+  <nav class="fixed bottom-0 inset-x-0 z-40 bg-zinc-950/95 backdrop-blur-lg border-t border-zinc-900 px-4 py-2">
+    <div class="max-w-md mx-auto grid grid-cols-4 gap-1">
+      
+      <button class="bottom-nav-item flex flex-col items-center justify-center py-1.5 text-amber-400 transition-colors" data-tab="home">
+        <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+        </svg>
+        <span class="text-[10px] font-bold">الرئيسية</span>
+      </button>
+
+      <button class="bottom-nav-item flex flex-col items-center justify-center py-1.5 text-zinc-400 hover:text-zinc-200 transition-colors" data-tab="search">
+        <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <span class="text-[10px] font-bold">استكشاف</span>
+      </button>
+
+      <button class="bottom-nav-item flex flex-col items-center justify-center py-1.5 text-zinc-400 hover:text-zinc-200 transition-colors relative" data-tab="continue">
+        <span id="history-count-badge" class="absolute top-1 right-5 bg-amber-500 text-zinc-950 font-black text-[9px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+        <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span class="text-[10px] font-bold">متابعة</span>
+      </button>
+
+      <button class="bottom-nav-item flex flex-col items-center justify-center py-1.5 text-zinc-400 hover:text-zinc-200 transition-colors relative" data-tab="favorites">
+        <span id="fav-count-badge" class="absolute top-1 right-5 bg-rose-500 text-white font-black text-[9px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+        <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+        </svg>
+        <span class="text-[10px] font-bold">مفضلتي</span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- 6. استدعاء الموديولات -->
+  <script type="module" src="./config.js"></script>
+  <script type="module" src="./storage.js"></script>
+  <script type="module" src="./app.js"></script>
+
+  <script>
+    window.switchTabGlobal = function(tabName) {
+      const btn = document.querySelector(`.bottom-nav-item[data-tab="${tabName}"]`);
+      if (btn) btn.click();
+    };
+  </script>
+
+</body>
+  </html>
