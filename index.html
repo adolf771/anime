@@ -1,43 +1,42 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="dark">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>أنمي ستريم | AnimeStream Mobile</title>
-  <meta name="description" content="تطبيق ويب خفيف وعصري لمشاهدة وتتبع الأنمي مع الوضع الداكن واستكمال المشاهدة والمفضلة" />
-  <meta property="og:title" content="أنمي ستريم | AnimeStream Mobile" />
-  <meta property="og:description" content="تطبيق ويب خفيف وعصري لمشاهدة وتتبع الأنمي مع الوضع الداكن واستكمال المشاهدة والمفضلة" />
+  <title>Palestine Anime | فلسطين أنمي</title>
+  <meta name="description" content="فلسطين أنمي - تطبيق ويب خفيف وعصري لمشاهدة وتنزيل الأنمي بجودات متعددة مع إشعارات الحلقات الجديدة للمفضلة وحاجب إعلانات ذكي والوضع الداكن واستكمال المشاهدة" />
+  <meta property="og:title" content="Palestine Anime | فلسطين أنمي" />
+  <meta property="og:description" content="فلسطين أنمي - تطبيق ويب خفيف وعصري لمشاهدة وتنزيل الأنمي بجودات متعددة مع إشعارات الحلقات الجديدة للمفضلة وحاجب إعلانات ذكي والوضع الداكن واستكمال المشاهدة" />
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#09090b" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-  <!-- خطوط عربية حديثة Google Fonts (Cairo & Plus Jakarta Sans) -->
+  <!-- خطوط عربية حديثة -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CSS عبر CDN لتشغيل الكود مباشرة بدون تثبيت npm -->
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['Cairo', 'Plus Jakarta Sans', 'sans-serif'],
-          },
           colors: {
-            zinc: {
-              950: '#09090b',
-              900: '#121215',
-              850: '#18181c',
-              800: '#222228',
-            },
-            amber: {
-              400: '#fbbf24',
-              500: '#f59e0b',
+            brand: {
+              red: '#e11d48',
+              accent: '#f43f5e',
+              emerald: '#10b981',
+              dark: '#09090b',
+              card: '#121215',
+              border: '#27272a'
             }
+          },
+          fontFamily: {
+            cairo: ['Cairo', 'Tajawal', 'sans-serif'],
+            tajawal: ['Tajawal', 'Cairo', 'sans-serif']
           }
         }
       }
@@ -46,21 +45,24 @@
 
   <style>
     body {
-      font-family: 'Cairo', sans-serif;
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+      background-color: #09090b;
+      color: #f4f4f5;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
     }
     
+    /* شريط التمرير المخصص اللطيف */
     ::-webkit-scrollbar {
-      width: 4px;
-      height: 4px;
+      width: 6px;
+      height: 6px;
     }
     ::-webkit-scrollbar-track {
       background: #09090b;
     }
     ::-webkit-scrollbar-thumb {
       background: #27272a;
-      border-radius: 4px;
+      border-radius: 9999px;
     }
     ::-webkit-scrollbar-thumb:hover {
       background: #3f3f46;
@@ -74,204 +76,565 @@
       scrollbar-width: none;
     }
 
-    .fade-in {
-      animation: fadeIn 0.25s ease-out forwards;
+    /* تأثيرات التدرج والظلال الناعمة */
+    .hero-gradient {
+      background: linear-gradient(180deg, rgba(9,9,11,0) 0%, rgba(9,9,11,0.6) 50%, rgba(9,9,11,1) 100%);
     }
+    .hero-side-gradient {
+      background: linear-gradient(90deg, rgba(9,9,11,0.95) 0%, rgba(9,9,11,0.4) 60%, rgba(9,9,11,0) 100%);
+    }
+
+    .card-poster {
+      aspect-ratio: 2 / 3;
+    }
+
+    /* حركة الظهور السلس */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(6px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    .fade-in {
+      animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
   </style>
 </head>
+<body class="min-h-screen flex flex-col bg-zinc-950 text-zinc-100 antialiased selection:bg-rose-500 selection:text-white">
 
-<body class="bg-zinc-950 text-zinc-100 min-h-screen pb-24 antialiased selection:bg-amber-500 selection:text-zinc-950">
-
-  <!-- 1. شريط التطبيق العلوي -->
-  <header class="sticky top-0 z-40 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-900/80 px-4 py-3">
-    <div class="max-w-md mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-2.5 cursor-pointer" onclick="window.switchTabGlobal('home')">
-        <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-400 text-zinc-950 flex items-center justify-center font-black shadow-lg shadow-amber-500/20 text-base">
-          ▶
+  <!-- =======================================================================
+       1. الشريط العلوي الذكي (Top Smart Header)
+       ======================================================================= -->
+  <header id="main-header" class="sticky top-0 z-40 w-full transition-all duration-300 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800/80 px-4 py-3">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+      
+      <!-- الشعار / Brand Logo -->
+      <a href="#" id="brand-home-btn" class="flex items-center gap-2 group cursor-pointer">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-rose-600 to-rose-400 flex items-center justify-center shadow-lg shadow-rose-900/30 font-black text-white text-base">
+          🇵🇸
         </div>
-        <div>
-          <span class="text-sm font-black tracking-tight text-white block leading-none">أنمي ستريم</span>
-          <span class="text-[10px] text-amber-400 font-semibold tracking-wider">ANIME STREAM</span>
+        <div class="flex flex-col">
+          <span class="font-black text-base tracking-wide text-white group-hover:text-rose-400 transition-colors">
+            فلسطين <span class="text-rose-500">أنمي</span>
+          </span>
+          <span class="text-[10px] text-zinc-400 -mt-1 font-tajawal">عالم الأنمي بجودات متعددة</span>
         </div>
-      </div>
+      </a>
 
-      <div class="flex items-center gap-2">
-        <button 
-          id="header-search-btn"
-          class="p-2 rounded-xl bg-zinc-900 text-zinc-300 hover:text-white border border-zinc-800 active:scale-95 transition-transform"
-          title="بحث فوري"
-        >
+      <!-- أزرار الإجراءات السريعة (بحث، حاجب إعلانات، مفضلة) -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- درع حماية الإعلانات (AdShield) -->
+        <button id="adshield-btn" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-bold transition-all hover:bg-emerald-900/40 active:scale-95" title="حاجب الإعلانات الخارجية نشط">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span class="hidden sm:inline">AdShield</span>
+          <span id="blocked-ads-badge" class="px-1.5 py-0.2 bg-emerald-500/20 rounded-full text-[10px] text-emerald-300">0</span>
+        </button>
+
+        <!-- زر البحث السريع للشاشات الصغيرة والكبيرة -->
+        <button id="quick-search-trigger" class="p-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white transition-colors border border-zinc-800" aria-label="بحث عن أنمي">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
           </svg>
         </button>
 
-        <div class="px-2 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-[11px] font-bold text-emerald-400 flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span>متصل</span>
-        </div>
+        <!-- اختصار فتح التنزيلات -->
+        <button id="quick-downloads-trigger" class="p-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white transition-colors border border-zinc-800 relative" aria-label="قائمة التنزيل">
+          <svg class="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+          </svg>
+        </button>
       </div>
+
     </div>
   </header>
 
-  <!-- 2. محتوى التبويبات -->
-  <main class="max-w-md mx-auto px-4 pt-4 space-y-6">
-
-    <!-- تبويب 1: الرئيسية -->
-    <section id="tab-home" class="space-y-6 fade-in">
-      
-      <!-- شريط البحث السريع -->
-      <div class="relative">
-        <div class="absolute inset-y-0 right-3.5 flex items-center pointer-events-none text-zinc-400">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-          </svg>
-        </div>
-        <input 
-          id="main-search-input"
-          type="search" 
-          placeholder="ابحث عن أنمي (مثال: Naruto, Attack on Titan...)" 
-          class="w-full bg-zinc-900 border border-zinc-800 text-zinc-100 text-xs sm:text-sm rounded-2xl pr-10 pl-10 py-3 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all placeholder:text-zinc-500"
-        />
-        <button 
-          id="clear-search-btn" 
-          class="absolute inset-y-0 left-3 flex items-center text-zinc-500 hover:text-zinc-300 hidden"
-        >
-          ✕
-        </button>
+  <!-- =======================================================================
+       2. شريط البحث المنبثق السريع (Search Overlay / Inline Input)
+       ======================================================================= -->
+  <div id="search-bar-container" class="max-w-7xl mx-auto w-full px-4 pt-3 pb-1 hidden">
+    <div class="relative w-full">
+      <input 
+        type="search" 
+        id="main-search-input" 
+        placeholder="ابحث عن اسم أنمي (مثال: ون بيس، Solo Leveling، هجوم العمالقة)..." 
+        class="w-full pl-10 pr-12 py-3 bg-zinc-900/90 text-sm text-zinc-100 rounded-2xl border border-zinc-800 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500 placeholder-zinc-500 transition-all shadow-inner"
+        autocomplete="off"
+      />
+      <div class="absolute right-4 top-3.5 text-zinc-500 pointer-events-none">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
       </div>
+      <button id="clear-search-btn" class="absolute left-3 top-3 text-zinc-500 hover:text-zinc-300 p-1 hidden">
+        ✕
+      </button>
+    </div>
+  </div>
 
-      <!-- شريط التصنيفات -->
-      <div id="genres-filter-container" class="flex gap-2 overflow-x-auto pb-1 hide-scrollbar"></div>
+  <!-- =======================================================================
+       3. شريط التصنيفات والفلترة (Genres Scroll Bar)
+       ======================================================================= -->
+  <div class="w-full bg-zinc-950/60 border-b border-zinc-900/80 py-2.5 px-4 overflow-hidden">
+    <div class="max-w-7xl mx-auto flex items-center gap-2 overflow-x-auto hide-scrollbar text-xs" id="genre-pills-container">
+      <button class="genre-pill px-3.5 py-1.5 rounded-full font-bold bg-rose-600 text-white whitespace-nowrap transition-all shadow-sm" data-genre-id="all">
+        الكل
+      </button>
+      <!-- سيتم توليد بقية التصنيفات ديناميكياً من API أو القائمة الافتراضية -->
+    </div>
+  </div>
 
-      <!-- البنر الترويجي -->
-      <div id="hero-container" class="w-full"></div>
+  <!-- =======================================================================
+       4. المحتوى الرئيسي (Main Application Content)
+       ======================================================================= -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-4 space-y-7 pb-24">
 
-      <!-- قسم: استكمال المشاهدة -->
+    <!-- -----------------------------------------------------------------------
+         تبويب 1: الرئيسية (Home Tab)
+         ----------------------------------------------------------------------- -->
+    <div id="tab-home" class="space-y-7">
+      
+      <!-- بانر الأنمي المميز في البداية (Hero Banner) -->
+      <section id="hero-banner-section" class="relative w-full rounded-3xl overflow-hidden bg-zinc-900 min-h-[360px] sm:min-h-[420px] flex items-end border border-zinc-800 shadow-2xl transition-all">
+        <div id="hero-backdrop" class="absolute inset-0 bg-cover bg-center transition-all duration-700 transform scale-105 opacity-80"></div>
+        <div class="absolute inset-0 hero-gradient"></div>
+        <div class="absolute inset-0 hero-side-gradient hidden sm:block"></div>
+        
+        <div class="relative z-10 p-5 sm:p-8 max-w-2xl space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-full bg-rose-600/90 text-white text-[11px] font-black uppercase tracking-wider">
+              مميز اليوم
+            </span>
+            <span id="hero-rating" class="flex items-center gap-1 text-amber-400 text-xs font-bold bg-zinc-950/70 px-2 py-0.5 rounded-md border border-zinc-800">
+              ⭐ 8.9
+            </span>
+            <span id="hero-quality-badge" class="text-[11px] font-bold text-zinc-300 bg-zinc-900/80 px-2 py-0.5 rounded border border-zinc-800">
+              1080p FHD
+            </span>
+          </div>
+
+          <h1 id="hero-title" class="text-2xl sm:text-4xl font-black text-white leading-tight drop-shadow-md">
+            جاري تحميل الأنمي المميز...
+          </h1>
+
+          <p id="hero-synopsis" class="text-xs sm:text-sm text-zinc-300 line-clamp-2 sm:line-clamp-3 leading-relaxed drop-shadow font-tajawal">
+            استمتع بمشاهدة وتحميل أفضل أعمال الأنمي بأعلى دقة وبدون إعلانات مزعجة.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-2.5 pt-2">
+            <button id="hero-watch-btn" class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs sm:text-sm transition-all shadow-lg shadow-rose-600/30 active:scale-95">
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <span>شاهد الآن (اختيار الجودة)</span>
+            </button>
+            <button id="hero-download-btn" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 text-zinc-100 font-bold text-xs sm:text-sm transition-all border border-zinc-700/60 active:scale-95">
+              <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              <span>تنزيل بجودات متعددة</span>
+            </button>
+            <button id="hero-fav-btn" class="p-2.5 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 text-zinc-300 hover:text-rose-500 transition-colors border border-zinc-800" title="إضافة للمفضلة">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- قسم متابعة المشاهدة (Continue Watching) -->
       <section id="continue-watching-section" class="space-y-3 hidden">
         <div class="flex items-center justify-between">
-          <button class="text-xs text-amber-400 font-bold hover:underline" onclick="window.switchTabGlobal('continue')">
-            عرض الكل
-          </button>
-          <div class="flex items-center gap-1.5">
-            <span class="w-1.5 h-4 bg-amber-500 rounded-full"></span>
-            <h2 class="text-sm font-black text-zinc-100 tracking-tight">استكمال المشاهدة</h2>
-          </div>
+          <h2 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+            استكمال المشاهدة
+          </h2>
+          <span class="text-xs text-zinc-500 font-tajawal">تلقائي من جهازك</span>
         </div>
-
-        <div id="continue-watching-list" class="flex gap-3 overflow-x-auto pb-2 hide-scrollbar"></div>
+        <div id="continue-watching-list" class="flex gap-3 overflow-x-auto hide-scrollbar pb-2">
+          <!-- يملأ برمجياً من LocalStorage -->
+        </div>
       </section>
 
-      <!-- قسم: الأنميات الأكثر رواجاً -->
+      <!-- قسم الأكثر رواجاً والأحدث (Trending & Popular) -->
       <section class="space-y-3">
         <div class="flex items-center justify-between">
-          <span class="text-[11px] text-zinc-500">محدّث تلقائياً</span>
-          <div class="flex items-center gap-1.5">
-            <span class="w-1.5 h-4 bg-amber-500 rounded-full"></span>
-            <h2 class="text-sm font-black text-zinc-100 tracking-tight">الأنميات الأكثر رواجاً</h2>
-          </div>
+          <h2 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <span class="text-rose-500">🔥</span>
+            الأنميات الأكثر مشاهدة ورواجاً
+          </h2>
+          <span class="text-xs text-zinc-400">محدث باستمرار</span>
         </div>
-
-        <div id="trending-container" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+        <!-- شبكة بطاقات الأنمي (Anime Grid) -->
+        <div id="anime-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+          <!-- سيتم توليد البطاقات ديناميكياً -->
+        </div>
       </section>
 
-    </section>
+    </div>
 
-    <!-- تبويب 2: البحث -->
+    <!-- -----------------------------------------------------------------------
+         تبويب 2: البحث والاستكشاف (Search & Discover Tab)
+         ----------------------------------------------------------------------- -->
     <section id="tab-search" class="space-y-4 hidden fade-in">
       <div class="flex items-center justify-between pb-2 border-b border-zinc-900">
-        <p id="search-count" class="text-xs text-zinc-400">ابحث عن أي أنمي بالإنجليزية أو اليابانية</p>
-        <h2 class="text-base font-bold text-white">نتائج البحث</h2>
+        <span id="search-results-count" class="text-xs text-zinc-400">نتائج البحث</span>
+        <h2 class="text-base font-bold text-white">استكشاف وبحث الأنمي</h2>
       </div>
 
-      <div id="search-results-container" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
-    </section>
-
-    <!-- تبويب 3: استكمال المشاهدة -->
-    <section id="tab-continue" class="space-y-4 hidden fade-in">
-      <div class="flex items-center justify-between pb-2 border-b border-zinc-900">
-        <span class="text-xs text-zinc-500">محفوظة على ذاكرة هاتفك</span>
-        <h2 class="text-base font-bold text-white">سجل استكمال المشاهدة</h2>
+      <!-- حالة لا توجد نتائج أو بحث فارغ -->
+      <div id="search-empty-state" class="py-16 text-center space-y-2 text-zinc-500">
+        <div class="text-4xl">🔍</div>
+        <p class="text-sm font-bold text-zinc-400">اكتب اسم أنمي في حقل البحث أعلاه</p>
+        <p class="text-xs">يدعم البحث باللغة العربية والإنجليزية وروماجي</p>
       </div>
 
-      <div id="tab-continue-list" class="space-y-3"></div>
+      <div id="search-results-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 hidden">
+        <!-- نتائج البحث تظهر هنا -->
+      </div>
     </section>
 
-    <!-- تبويب 4: مفضلتي -->
+    <!-- -----------------------------------------------------------------------
+         تبويب 3: المفضلة (Watchlist / Favorites Tab)
+         ----------------------------------------------------------------------- -->
     <section id="tab-favorites" class="space-y-4 hidden fade-in">
       <div class="flex items-center justify-between pb-2 border-b border-zinc-900">
-        <span class="text-xs text-zinc-500">أنمياتك المفضلة للرجوع إليها</span>
+        <button id="check-new-episodes-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-amber-400 border border-zinc-800 text-xs font-bold transition-all active:scale-95 shadow-sm">
+          <svg id="check-ep-spinner" class="w-3.5 h-3.5 animate-spin hidden text-amber-400" viewBox="0 0 24 24" fill="none">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+          </svg>
+          <span id="check-ep-text">🔄 فحص الحلقات الجديدة</span>
+        </button>
         <h2 class="text-base font-bold text-white">قائمة مفضلتي</h2>
       </div>
 
-      <div id="favorites-container" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+      <!-- شبكة الأنميات المفضلة -->
+      <div id="tab-favorites-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4"></div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         تبويب 4: سجل المشاهدة (History Tab)
+         ----------------------------------------------------------------------- -->
+    <section id="tab-history" class="space-y-4 hidden fade-in">
+      <div class="flex items-center justify-between pb-2 border-b border-zinc-900">
+        <button id="clear-history-btn" class="text-xs text-rose-400 hover:text-rose-300 font-bold">مسح السجل</button>
+        <h2 class="text-base font-bold text-white">سجل المشاهدة الأخير</h2>
+      </div>
+      <div id="tab-history-list" class="space-y-2"></div>
     </section>
 
   </main>
 
-  <!-- 3. نافذة تفاصيل الأنمي -->
-  <div id="anime-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
-    <div id="anime-modal-content" class="w-full max-w-md bg-zinc-950 rounded-t-3xl sm:rounded-3xl border border-zinc-800 max-h-[90vh] overflow-y-auto shadow-2xl relative"></div>
-  </div>
-
-  <!-- 4. نافذة مشغل الفيديو والسيرفرات -->
-  <div id="player-modal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex flex-col justify-center items-center p-0 sm:p-4">
-    <div id="player-modal-content" class="w-full max-w-xl bg-zinc-950 rounded-none sm:rounded-3xl border border-zinc-800/80 shadow-2xl overflow-hidden"></div>
-  </div>
-
-  <!-- 5. الشريط السفلي للتنقل -->
-  <nav class="fixed bottom-0 inset-x-0 z-40 bg-zinc-950/95 backdrop-blur-lg border-t border-zinc-900 px-4 py-2">
-    <div class="max-w-md mx-auto grid grid-cols-4 gap-1">
-      
-      <button class="bottom-nav-item flex flex-col items-center justify-center py-1.5 text-amber-400 transition-colors" data-tab="home">
-        <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-        </svg>
-        <span class="text-[10px] font-bold">الرئيسية</span>
+  <!-- =======================================================================
+       5. الشريط السفلي للتنقل المريح عبر الهاتف (Bottom Navigation Bar)
+       ======================================================================= -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bg-zinc-950/95 backdrop-blur-md border-t border-zinc-800/80 px-2 py-1.5 sm:hidden">
+    <div class="flex items-center justify-around">
+      <button class="nav-tab-btn flex flex-col items-center gap-1 py-1 px-3 text-rose-500 font-bold transition-colors" data-target-tab="home">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span class="text-[10px]">الرئيسية</span>
       </button>
 
-      <button class="bottom-nav-item flex flex-col items-center justify-center py-1.5 text-zinc-400 hover:text-zinc-200 transition-colors" data-tab="search">
-        <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-        </svg>
-        <span class="text-[10px] font-bold">استكشاف</span>
+      <button class="nav-tab-btn flex flex-col items-center gap-1 py-1 px-3 text-zinc-400 font-bold transition-colors" data-target-tab="search">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <span class="text-[10px]">بحث</span>
       </button>
 
-      <button class="bottom-nav-item flex flex-col items-center justify-center py-1.5 text-zinc-400 hover:text-zinc-200 transition-colors relative" data-tab="continue">
-        <span id="history-count-badge" class="absolute top-1 right-5 bg-amber-500 text-zinc-950 font-black text-[9px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
-        <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-        <span class="text-[10px] font-bold">متابعة</span>
+      <button class="nav-tab-btn flex flex-col items-center gap-1 py-1 px-3 text-zinc-400 font-bold transition-colors relative" data-target-tab="favorites">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        <span class="text-[10px]">مفضلتي</span>
+        <span id="nav-fav-badge" class="absolute top-0.5 right-2 w-2 h-2 rounded-full bg-rose-500 hidden"></span>
       </button>
 
-      <button class="bottom-nav-item flex flex-col items-center justify-center py-1.5 text-zinc-400 hover:text-zinc-200 transition-colors relative" data-tab="favorites">
-        <span id="fav-count-badge" class="absolute top-1 right-5 bg-rose-500 text-white font-black text-[9px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
-        <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-        </svg>
-        <span class="text-[10px] font-bold">مفضلتي</span>
+      <button class="nav-tab-btn flex flex-col items-center gap-1 py-1 px-3 text-zinc-400 font-bold transition-colors" data-target-tab="history">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span class="text-[10px]">السجل</span>
       </button>
-
     </div>
   </nav>
 
-  <!-- 6. استدعاء الموديولات -->
-  <script type="module" src="./config.js"></script>
-  <script type="module" src="./storage.js"></script>
+  <!-- =======================================================================
+       6. نافذة مشغل الفيديو وحاجب الإعلانات (Player & Watch Modal)
+       ======================================================================= -->
+  <div id="player-modal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex flex-col">
+    <!-- شريط تحكم رأس المشغل -->
+    <div class="flex items-center justify-between p-3 sm:p-4 bg-zinc-950 border-b border-zinc-800">
+      <button id="close-player-btn" class="p-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      
+      <div class="text-center px-2 truncate max-w-[60vw]">
+        <h3 id="player-title" class="text-sm sm:text-base font-black text-white truncate">اسم الأنمي</h3>
+        <span id="player-episode-label" class="text-xs text-rose-400 font-bold">الحلقة 1</span>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <!-- زر فتح نافذة التنزيل من داخل المشغل -->
+        <button id="player-download-btn" class="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700 text-xs font-bold text-emerald-400 hover:bg-zinc-800">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          <span class="hidden sm:inline">تنزيل</span>
+        </button>
+
+        <span class="text-[10px] px-2 py-1 rounded bg-emerald-950 text-emerald-400 font-bold border border-emerald-800/40">
+          🛡️ محمي من الإعلانات
+        </span>
+      </div>
+    </div>
+
+    <!-- شريط اختيار الجودة الفوري داخل المشغل -->
+    <div class="bg-zinc-900/90 border-b border-zinc-800 px-3 py-2 flex items-center justify-between text-xs">
+      <div class="flex items-center gap-1.5 overflow-x-auto hide-scrollbar" id="player-quality-pills">
+        <span class="text-zinc-400 font-bold ml-1">الجودة الحالية:</span>
+        <button class="player-q-btn px-2.5 py-1 rounded-md bg-rose-600 text-white font-bold" data-quality="1080p">1080p FHD</button>
+        <button class="player-q-btn px-2.5 py-1 rounded-md bg-zinc-800 text-zinc-300 font-bold hover:bg-zinc-700" data-quality="720p">720p HD</button>
+        <button class="player-q-btn px-2.5 py-1 rounded-md bg-zinc-800 text-zinc-300 font-bold hover:bg-zinc-700" data-quality="480p">480p SD</button>
+        <button class="player-q-btn px-2.5 py-1 rounded-md bg-zinc-800 text-zinc-300 font-bold hover:bg-zinc-700" data-quality="360p">360p Low</button>
+      </div>
+      <div id="player-server-label" class="text-zinc-500 text-[11px] hidden sm:block font-tajawal">سيرفر سريع وخالي من الإعلانات</div>
+    </div>
+
+    <!-- حاوية الفيديو / iframe مع عزل الإعلانات -->
+    <div class="flex-1 w-full bg-black relative flex items-center justify-center">
+      <div id="player-loading-spinner" class="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-zinc-950 z-10">
+        <div class="w-10 h-10 border-4 border-rose-600 border-t-transparent rounded-full animate-spin"></div>
+        <p class="text-xs text-zinc-400">جاري تجهيز السيرفر وحجب الإعلانات الخارجية...</p>
+      </div>
+
+      <!-- إطار الفيديو الذكي مع sandbox للحد من أي نوافذ منبثقة أو تحويلات إعلانية -->
+      <iframe 
+        id="video-stream-iframe" 
+        class="w-full h-full border-0 relative z-20" 
+        allowfullscreen 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-presentation"
+      ></iframe>
+    </div>
+
+    <!-- قائمة الحلقات السريعة أسفل المشغل -->
+    <div class="p-3 bg-zinc-950 border-t border-zinc-800 max-h-36 overflow-y-auto">
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-xs font-bold text-white">اختر حلقة أخرى للمشاهدة:</span>
+        <span id="player-total-episodes-hint" class="text-[11px] text-zinc-500">12 حلقة</span>
+      </div>
+      <div id="player-episodes-grid" class="flex flex-wrap gap-2"></div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       7. نافذة السؤال عن الجودة قبل المشاهدة (Watch Quality Selector Modal)
+       ======================================================================= -->
+  <div id="quality-selector-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-sm bg-zinc-900 border border-zinc-800 rounded-3xl p-5 space-y-4 shadow-2xl relative">
+      <button id="close-quality-modal-btn" class="absolute top-4 left-4 p-1.5 rounded-full bg-zinc-800 text-zinc-400 hover:text-white">✕</button>
+
+      <div class="text-center space-y-1">
+        <div class="w-12 h-12 mx-auto rounded-2xl bg-rose-600/20 text-rose-500 flex items-center justify-center text-xl font-black mb-2">
+          🎬
+        </div>
+        <h3 class="text-base font-black text-white">بأي جودة ترغب في المشاهدة؟</h3>
+        <p class="text-xs text-zinc-400">اختر الجودة المناسبة لسرعة الإنترنت لديك</p>
+      </div>
+
+      <!-- خيارات الجودات -->
+      <div class="space-y-2 pt-1" id="quality-options-container">
+        <!-- 1080p -->
+        <button class="quality-select-btn w-full p-3 rounded-2xl bg-zinc-800/80 hover:bg-rose-600/20 hover:border-rose-500 border border-zinc-700/80 flex items-center justify-between transition-all group" data-quality="1080p">
+          <div class="flex items-center gap-3">
+            <span class="px-2 py-1 rounded-md bg-rose-600 text-[10px] font-black text-white">1080p</span>
+            <div class="text-right">
+              <h4 class="text-xs font-bold text-white group-hover:text-rose-400">فائقة الدقة (FHD)</h4>
+              <p class="text-[10px] text-zinc-400">صورة واضحة جداً للشاشات الكبيرة</p>
+            </div>
+          </div>
+          <span class="text-zinc-500 group-hover:text-rose-400 text-sm">▶</span>
+        </button>
+
+        <!-- 720p -->
+        <button class="quality-select-btn w-full p-3 rounded-2xl bg-zinc-800/80 hover:bg-rose-600/20 hover:border-rose-500 border border-zinc-700/80 flex items-center justify-between transition-all group" data-quality="720p">
+          <div class="flex items-center gap-3">
+            <span class="px-2 py-1 rounded-md bg-emerald-600 text-[10px] font-black text-white">720p</span>
+            <div class="text-right">
+              <h4 class="text-xs font-bold text-white group-hover:text-rose-400">عالية الدقة (HD) - موصى به</h4>
+              <p class="text-[10px] text-zinc-400">توازن مثالي بين السرعة والوضوح</p>
+            </div>
+          </div>
+          <span class="text-zinc-500 group-hover:text-rose-400 text-sm">▶</span>
+        </button>
+
+        <!-- 480p -->
+        <button class="quality-select-btn w-full p-3 rounded-2xl bg-zinc-800/80 hover:bg-rose-600/20 hover:border-rose-500 border border-zinc-700/80 flex items-center justify-between transition-all group" data-quality="480p">
+          <div class="flex items-center gap-3">
+            <span class="px-2 py-1 rounded-md bg-amber-600 text-[10px] font-black text-white">480p</span>
+            <div class="text-right">
+              <h4 class="text-xs font-bold text-white group-hover:text-rose-400">دقة متوسطة (SD)</h4>
+              <p class="text-[10px] text-zinc-400">لتوفير باقة بيانات الهاتف</p>
+            </div>
+          </div>
+          <span class="text-zinc-500 group-hover:text-rose-400 text-sm">▶</span>
+        </button>
+
+        <!-- 360p -->
+        <button class="quality-select-btn w-full p-3 rounded-2xl bg-zinc-800/80 hover:bg-rose-600/20 hover:border-rose-500 border border-zinc-700/80 flex items-center justify-between transition-all group" data-quality="360p">
+          <div class="flex items-center gap-3">
+            <span class="px-2 py-1 rounded-md bg-zinc-600 text-[10px] font-black text-white">360p</span>
+            <div class="text-right">
+              <h4 class="text-xs font-bold text-white group-hover:text-rose-400">دقة خفيفة (Low)</h4>
+              <p class="text-[10px] text-zinc-400">لشبكات الإنترنت البطيئة</p>
+            </div>
+          </div>
+          <span class="text-zinc-500 group-hover:text-rose-400 text-sm">▶</span>
+        </button>
+      </div>
+
+      <div class="pt-2 text-center">
+        <label class="flex items-center justify-center gap-2 text-[11px] text-zinc-400 cursor-pointer">
+          <input type="checkbox" id="remember-quality-checkbox" class="rounded accent-rose-600" />
+          <span>تذكر خياري كافتراضي دائماً</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       8. نافذة التنزيل بجودات وسيرفرات متعددة (Multi-Quality Download Modal)
+       ======================================================================= -->
+  <div id="download-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-zinc-900 border border-zinc-800 rounded-3xl p-5 space-y-4 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <button id="close-download-modal-btn" class="absolute top-4 left-4 p-1.5 rounded-full bg-zinc-800 text-zinc-400 hover:text-white">✕</button>
+
+      <div class="text-right space-y-1">
+        <div class="flex items-center gap-2">
+          <span class="p-2 rounded-xl bg-emerald-500/20 text-emerald-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          </span>
+          <div>
+            <h3 id="dl-modal-anime-title" class="text-sm sm:text-base font-black text-white truncate max-w-[260px]">تنزيل الأنمي</h3>
+            <p id="dl-modal-episode-title" class="text-xs text-rose-400 font-bold">الحلقة 1</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- محدد الحلقة المراد تنزيلها -->
+      <div class="space-y-1.5 bg-zinc-950/60 p-3 rounded-2xl border border-zinc-800/80">
+        <label class="text-[11px] text-zinc-400 font-bold">اختر الحلقة للتنزيل:</label>
+        <div id="dl-episodes-selector" class="flex gap-1.5 overflow-x-auto hide-scrollbar py-1"></div>
+      </div>
+
+      <!-- قائمة الجودات للتنزيل مع الحجم وسيرفرات التحميل -->
+      <div class="space-y-2 pt-1" id="dl-qualities-list">
+        <!-- 1080p Download Card -->
+        <div class="p-3 rounded-2xl bg-zinc-800/70 border border-zinc-700/80 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] text-zinc-400 font-tajawal">حوالي ~450 MB</span>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-white">جودة فائقة (1080p)</span>
+              <span class="px-2 py-0.5 rounded bg-rose-600 text-white font-black text-[10px]">FHD</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="#" class="dl-action-link flex-1 py-1.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold text-center transition-all flex items-center justify-center gap-1.5" data-quality="1080p" data-server="primary" target="_blank" rel="noopener">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              <span>تحميل مباشر MP4</span>
+            </a>
+            <a href="#" class="dl-action-link py-1.5 px-3 rounded-xl bg-zinc-700 hover:bg-zinc-600 text-zinc-200 text-xs font-bold text-center transition-all" data-quality="1080p" data-server="mega" target="_blank" rel="noopener">
+              سيرفر Mega
+            </a>
+          </div>
+        </div>
+
+        <!-- 720p Download Card -->
+        <div class="p-3 rounded-2xl bg-zinc-800/70 border border-zinc-700/80 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] text-zinc-400 font-tajawal">حوالي ~220 MB (موصى به)</span>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-white">جودة عالية (720p)</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-600 text-white font-black text-[10px]">HD</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="#" class="dl-action-link flex-1 py-1.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold text-center transition-all flex items-center justify-center gap-1.5" data-quality="720p" data-server="primary" target="_blank" rel="noopener">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              <span>تحميل مباشر MP4</span>
+            </a>
+            <a href="#" class="dl-action-link py-1.5 px-3 rounded-xl bg-zinc-700 hover:bg-zinc-600 text-zinc-200 text-xs font-bold text-center transition-all" data-quality="720p" data-server="mega" target="_blank" rel="noopener">
+              سيرفر الخليج
+            </a>
+          </div>
+        </div>
+
+        <!-- 480p Download Card -->
+        <div class="p-3 rounded-2xl bg-zinc-800/70 border border-zinc-700/80 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] text-zinc-400 font-tajawal">حوالي ~110 MB</span>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-white">جودة متوسطة (480p)</span>
+              <span class="px-2 py-0.5 rounded bg-amber-600 text-white font-black text-[10px]">SD</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="#" class="dl-action-link flex-1 py-1.5 px-3 rounded-xl bg-zinc-700 hover:bg-emerald-600 text-white text-xs font-bold text-center transition-all flex items-center justify-center gap-1.5" data-quality="480p" data-server="primary" target="_blank" rel="noopener">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              <span>تحميل سريع MP4</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 360p Download Card -->
+        <div class="p-3 rounded-2xl bg-zinc-800/70 border border-zinc-700/80 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[10px] text-zinc-400 font-tajawal">حوالي ~65 MB</span>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-white">جودة منخفضة (360p)</span>
+              <span class="px-2 py-0.5 rounded bg-zinc-600 text-white font-black text-[10px]">Low</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="#" class="dl-action-link flex-1 py-1.5 px-3 rounded-xl bg-zinc-700 hover:bg-emerald-600 text-white text-xs font-bold text-center transition-all flex items-center justify-center gap-1.5" data-quality="360p" data-server="primary" target="_blank" rel="noopener">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              <span>تحميل خفيف جداً</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       9. نافذة تفاصيل الأنمي الكاملة (Anime Details Full Modal)
+       ======================================================================= -->
+  <div id="anime-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div id="anime-modal-content" class="w-full max-w-2xl bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden shadow-2xl relative my-auto">
+      <!-- يملأ ديناميكياً بواسطة JavaScript -->
+    </div>
+  </div>
+
+  <!-- =======================================================================
+       10. لوحة معلومات حاجب الإعلانات (AdShield Info Modal)
+       ======================================================================= -->
+  <div id="adshield-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="w-full max-w-sm bg-zinc-900 border border-zinc-800 rounded-3xl p-5 space-y-4 shadow-2xl relative text-center">
+      <button id="close-adshield-modal-btn" class="absolute top-4 left-4 p-1.5 rounded-full bg-zinc-800 text-zinc-400 hover:text-white">✕</button>
+
+      <div class="w-12 h-12 mx-auto rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl">
+        🛡️
+      </div>
+
+      <div class="space-y-1">
+        <h3 class="text-base font-black text-white">حاجب الإعلانات الذكي (AdShield)</h3>
+        <p class="text-xs text-zinc-400">يقوم بعزل النوافذ المنبثقة، وإعلانات إعادة التوجيه التلقائي المفاجئة أثناء المشاهدة.</p>
+      </div>
+
+      <div class="p-3 rounded-2xl bg-zinc-950 border border-zinc-800 text-center space-y-1">
+        <span class="text-2xl font-black text-emerald-400" id="adshield-stat-count">0</span>
+        <p class="text-xs text-zinc-400">إعلان ومحاولة انبثاق تم اعتراضها بنجاح</p>
+      </div>
+
+      <div class="flex items-center justify-between p-3 rounded-2xl bg-zinc-800/60 border border-zinc-700/60">
+        <span class="text-xs font-bold text-white">حالة الحماية:</span>
+        <button id="toggle-adblock-btn" class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-600 text-white">
+          مفعلة دائماً
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- تطبيق الجافاسكربت المعياري الرئيسي -->
   <script type="module" src="./app.js"></script>
-
-  <script>
-    window.switchTabGlobal = function(tabName) {
-      const btn = document.querySelector(`.bottom-nav-item[data-tab="${tabName}"]`);
-      if (btn) btn.click();
-    };
-  </script>
-
 </body>
-  </html>
+                                                                        </html>
