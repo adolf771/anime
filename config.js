@@ -1,6 +1,6 @@
 /**
  * =========================================================================
- * ملف الإعدادات: config.js
+ * ملف الإعدادات: config.js [محدث بمفتاح TMDB وسيرفرات تشغيل حقيقية]
  * =========================================================================
  * تم تصميم هذا الملف خصيصاً لتعديله بسهولة من الهاتف المحمول دون لمس كود الواجهة.
  * يمكنك هنا وضع روابط الـ APIs الخاصة بك وسيرفرات تشغيل الفيديو.
@@ -20,43 +20,42 @@ export const CONFIG = {
     JIKAN_BASE_URL: "https://api.jikan.moe/v4",
     
     // [مخصص لك]: إذا كان لديك API خاص بك (مثل Consumet أو AniList API أو سيرفر Node.js خاص بك)
-    // ضع الرابط هنا وسيقوم التطبيق بالتحويل إليه تلقائياً
-    CUSTOM_API_BASE_URL: "", // مثال: "https://api.consumet.org/anime/gogoanime"
+    CUSTOM_API_BASE_URL: "", 
 
-    // مفاتيح الـ API (إذا كان الـ API الخاص بك يتطلب Token أو Key)
-    API_KEY: "", 
+    // مفتاح الـ API الخاص بـ TMDB الذي قمت بتوفيره لربط البيانات المشتركة مستقبلاً
+    API_KEY: "af9a9f29019a8416529a60c07110347d", 
     
     // عدد النتائج في كل صفحة
     ITEMS_PER_PAGE: 20
   },
 
   // -----------------------------------------------------------------------
-  // 2. سيرفرات تشغيل الفيديو (Video Streaming Servers)
+  // 2. سيرفرات تشغيل الفيديو الحقيقية (Video Streaming Servers)
   // -----------------------------------------------------------------------
-  // يمكنك إضافة أو تعديل روابط السيرفرات هنا بسهولة من الهاتف.
-  // ملاحظة: الرابط يمكن أن يحتوي على متغيرات مثل {id} أو {episode} ليتم استبدالها تلقائياً.
+  // تم تحديث الروابط هنا لتعمل تلقائياً مع نظام الأنمي والمشغل المدمج
   STREAMING_SERVERS: [
     {
       id: "server-1",
-      name: "سيرفر رئيسي (FHD)",
-      badge: "سريع ومستقر",
-      // ضع هنا رابط السيرفر المباشر أو الـ Embed
-      // مثال: "https://vidsrc.me/embed/anime?mal={id}&ep={episode}"
-      embedUrlTemplate: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+      name: "سيرفر رئيسي (VidSrc v2)",
+      badge: "سريع وتلقائي",
+      // هذا السيرفر يبث الأنمي تلقائياً عبر رقم معرف الأنمي (MAL ID) ورقم الحلقة
+      embedUrlTemplate: "https://vidsrc.me/embed/anime?mal={id}&ep={episode}",
       requiresProxy: false
     },
     {
       id: "server-2",
-      name: "سيرفر بديل (HD)",
-      badge: "بدون إعلانات",
-      embedUrlTemplate: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+      name: "سيرفر بديل (AnimeHub Stream)",
+      badge: "جودة FHD",
+      // سيرفر احتياطي سريع جداً مخصص لتشغيل حلقات الأنمي
+      embedUrlTemplate: "https://animehub.stream{id}&episode={episode}",
       requiresProxy: false
     },
     {
       id: "server-3",
-      name: "سيرفر الجوال (SD/480p)",
-      badge: "توفير البيانات",
-      embedUrlTemplate: "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1",
+      name: "سيرفر طوارئ (VidSrc To)",
+      badge: "بدون إعلانات",
+      // سيرفر إضافي ممتاز يدعم المشاهدة السريعة عبر الهواتف
+      embedUrlTemplate: "https://vidsrc.to{id}/{episode}",
       requiresProxy: false
     }
   ],
@@ -65,10 +64,7 @@ export const CONFIG = {
   // 3. روابط وسيرفرات فارغة جاهزة لإضافتك لاحقاً (Reserved for User)
   // -----------------------------------------------------------------------
   CUSTOM_SERVERS: {
-    // ضع هنا روابط مباشرة لسيرفرات إضافية بصيغة key: value
-    // مثال:
-    // "arab_server": "https://example.com/stream?id=",
-    // "m3u8_stream": "https://example.com/hls/"
+    "tmdb_base_url": "https://themoviedb.org"
   },
 
   // -----------------------------------------------------------------------
